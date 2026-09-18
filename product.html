@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>
+        {{ product['name'] }}
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        CodeAlpha Store
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        <a href="/cart">
+            🛒 Cart
+        </a>
+
+    </nav>
+
+</header>
+
+
+<div class="product-detail">
+
+    <img
+        src="{{ product['image'] }}"
+        alt="{{ product['name'] }}"
+    >
+
+    <div>
+
+        <h1>
+            {{ product['name'] }}
+        </h1>
+
+        <p class="category">
+            {{ product['category'] }}
+        </p>
+
+        <p>
+            {{ product['description'] }}
+        </p>
+
+        <h2 class="price">
+            ₹{{ product['price'] }}
+        </h2>
+
+        <p>
+            Available stock:
+            {{ product['stock'] }}
+        </p>
+
+        <br>
+
+        <a
+            class="btn green"
+            href="/add-to-cart/{{ product['id'] }}">
+            Add to Cart
+        </a>
+
+        <a
+            class="btn"
+            href="/cart">
+            View Cart
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

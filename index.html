@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>CodeAlpha Store</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        CodeAlpha Store
+    </div>
+
+    <nav>
+
+        <a href="/">Home</a>
+
+        <a href="/cart">
+            🛒 Cart
+        </a>
+
+        {% if session.get("user_id") %}
+
+            <span class="welcome">
+                Hello, {{ session.get("user_name") }}
+            </span>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+            <a href="/register">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>
+        Welcome to CodeAlpha Store
+    </h1>
+
+    <p>
+        Quality products at amazing prices
+    </p>
+
+    <a href="#products"
+       class="hero-btn">
+        Shop Now
+    </a>
+
+</section>
+
+
+<section class="container"
+         id="products">
+
+    <h2>
+        Our Products
+    </h2>
+
+    <div class="products">
+
+        {% for product in products %}
+
+        <div class="product-card">
+
+            <img src="{{ product['image'] }}"
+                 alt="{{ product['name'] }}">
+
+            <div class="product-info">
+
+                <h3>
+                    {{ product['name'] }}
+                </h3>
+
+                <p>
+                    {{ product['description'] }}
+                </p>
+
+                <p class="category">
+                    {{ product['category'] }}
+                </p>
+
+                <p class="price">
+                    ₹{{ product['price'] }}
+                </p>
+
+                <p>
+                    Stock:
+                    {{ product['stock'] }}
+                </p>
+
+                <div class="buttons">
+
+                    <a class="btn"
+                       href="/product/{{ product['id'] }}">
+                        Details
+                    </a>
+
+                    <a class="btn green"
+                       href="/add-to-cart/{{ product['id'] }}">
+                        Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 CodeAlpha Store
+    </p>
+
+</footer>
+
+</body>
+
+</html>

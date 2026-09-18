@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>
+        Shopping Cart
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        CodeAlpha Store
+    </div>
+
+    <nav>
+
+        <a href="/">
+            Home
+        </a>
+
+        {% if session.get("user_id") %}
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="/login">
+                Login
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+</header>
+
+
+<div class="cart-container">
+
+    <h1>
+        Shopping Cart
+    </h1>
+
+
+    {% if message %}
+
+        <div class="success">
+            {{ message }}
+        </div>
+
+    {% endif %}
+
+
+    {% if cart %}
+
+        {% for item in cart %}
+
+        <div class="cart-item">
+
+            <img
+                src="{{ item['product']['image'] }}"
+                alt="{{ item['product']['name'] }}"
+            >
+
+            <div>
+
+                <h3>
+                    {{ item['product']['name'] }}
+                </h3>
+
+                <p>
+                    ₹{{ item['product']['price'] }}
+                </p>
+
+                <p>
+                    Quantity:
+                    {{ item['quantity'] }}
+                </p>
+
+                <p>
+                    Item Total:
+                    ₹{{ item['item_total'] }}
+                </p>
+
+            </div>
+
+            <a
+                class="remove"
+                href="/remove-from-cart/{{ item['product']['id'] }}">
+                Remove
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+
+        <div class="total">
+
+            <h2>
+                Total:
+                ₹{{ total }}
+            </h2>
+
+            <br>
+
+            {% if session.get("user_id") %}
+
+                <form method="POST"
+                      action="/checkout">
+
+                    <button type="submit">
+                        Place Order
+                    </button>
+
+                </form>
+
+            {% else %}
+
+                <p>
+                    Please login to place your order.
+                </p>
+
+                <br>
+
+                <a class="btn"
+                   href="/login">
+                    Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>
+                Your cart is empty
+            </h2>
+
+            <br>
+
+            <a class="btn"
+               href="/">
+                Continue Shopping
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
